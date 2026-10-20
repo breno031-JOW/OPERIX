@@ -152,3 +152,8 @@ Distribuído sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais
 ## 👤 Autor
 
 Desenvolvido por [@breno031-JOW](https://github.com/breno031-JOW).
+Danilonunes.9102
+Ygor Ricardo
+jhomjhomdanix-prog
+drumondfe
+analuizzaslps@gmail.com
