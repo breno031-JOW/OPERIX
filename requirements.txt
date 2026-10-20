@@ -1,0 +1,2 @@
+# O Operix usa apenas a biblioteca padrão do Python (tkinter, sqlite3, hashlib...).
+# Não há dependências de execução para instalar.
