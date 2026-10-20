@@ -33,15 +33,15 @@ flowchart LR
 
 | Login | Dashboard |
 |:---:|:---:|
-| ![Login](docs/screenshots/login.png) | ![Dashboard](docs/screenshots/dashboard.png) |
+| ![Login](https://drive.google.com/file/d/1l0tFrd8ToSYP-COHjyvRElosVZonDFFk/view?usp=drive_link) | ![Dashboard](https://drive.google.com/file/d/1iEauigfFOXf-K4R969Vgpw1wKXVQBDlo/view?usp=drive_link) |
 
 | Clientes e Ativos | Orçamentos |
 |:---:|:---:|
-| ![Clientes](docs/screenshots/clientes.png) | ![Orçamentos](docs/screenshots/orcamentos.png) |
+| ![Clientes](https://drive.google.com/file/d/1MeCJBqxOHXtFcCAsfWXdbsZ4ihErihKZ/view?usp=drive_link) | ![Orçamentos](https://drive.google.com/file/d/11HMZgTxy9CcuOiDQTzcIjYz9GU3WC1wd/view?usp=drive_link) |
 
 | Ordens de Serviço |
 |:---:|
-| ![Ordens de Serviço](docs/screenshots/ordens-servico.png) |
+| ![Ordens de Serviço](https://drive.google.com/file/d/1-tw-CyOS-Az1ZYHAzgW5T-u65QcW5NhV/view?usp=drive_link) |
 
 ## 🚀 Funcionalidades
 
