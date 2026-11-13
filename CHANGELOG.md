@@ -3,7 +3,36 @@
 Todas as mudanças relevantes deste projeto são documentadas aqui.
 O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
-## [1.0.0] - 2026-10-20
+## [2.0.0] - 2026-11-13
+
+### Corrigido
+- `main.py` importava o pacote `operix/`, que não existia no repositório (o sistema não abria). O pacote foi criado de fato.
+- Senhas eram gravadas em texto puro e a tela de login vinha preenchida com o admin.
+- Conexões SQLite nunca eram fechadas (`with sqlite3.connect()` só faz commit).
+- Valor `1.5` era gravado como `15` (todo ponto era removido).
+- Aprovar orçamento/concluir OS não conferiam a empresa nem o status atual no banco.
+- Cadastro duplicava clientes com o mesmo CPF e não permitia mais de um veículo por cliente.
+- Testes de integração falhavam (3 de 3) por falta de dados iniciais.
+
+### Adicionado
+- Arquitetura em camadas: `database`, `models`, `services`, `ui`, `reports`.
+- Migrações versionadas com conversão automática do banco da versão anterior.
+- OS com itens (peças + mão de obra), desconto, fluxo de 8 status e histórico.
+- Estoque: baixa automática na aprovação, estorno no cancelamento, entradas, ajustes e alerta de mínimo.
+- Pagamentos parciais, contas a receber e dashboard financeiro.
+- Histórico por placa.
+- PDFs de orçamento, ordem de serviço, recibo e relatório financeiro.
+- Perfis Administrador / Atendente / Mecânico com permissões verificadas nos serviços.
+- Validação de CPF, CNPJ, placa (antiga e Mercosul), telefone e e-mail, com máscaras na digitação.
+- Interface com ttkbootstrap: tabelas com busca e ordenação, atalhos de teclado e avisos (toasts).
+- Tratador central de erros com log em arquivo.
+- Assistente de primeiro acesso e modo `--demo`.
+- 56 testes automatizados e CI no GitHub Actions (Windows).
+
+### Removido
+- `login_app (1).py` (protótipo em arquivo único, substituído pelo pacote `operix`).
+
+## [1.0.0] - 2026-10-20 (documentado, mas o código não foi publicado)
 
 ### Adicionado
 - Estrutura modular em pacote (`models`, `services`, `ui`, `database`, `security`)

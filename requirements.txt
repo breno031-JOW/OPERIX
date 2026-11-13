@@ -1,2 +1,5 @@
-# O Operix usa apenas a biblioteca padrão do Python (tkinter, sqlite3, hashlib...).
-# Não há dependências de execução para instalar.
+# Dependências para EXECUTAR o Operix
+# Instale com:  pip install -r requirements.txt
+ttkbootstrap==1.10.1   # tema moderno para Tkinter (tabelas, toasts, calendário)
+fpdf2==2.9.0           # geração dos PDFs (orçamento, OS, recibo, relatório)
+pillow>=10.0           # usado pelo ttkbootstrap para imagens/ícones

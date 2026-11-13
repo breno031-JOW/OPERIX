@@ -1,2 +1,4 @@
+# Dependências de DESENVOLVIMENTO (testes e lint)
+-r requirements.txt
 pytest>=8.0
 ruff>=0.5

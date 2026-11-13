@@ -2,13 +2,13 @@
 
 # 🛠️ Operix
 
-**Gestão inteligente da sua operação**
+**Gestão inteligente para oficinas mecânicas**
 
-Sistema desktop em Python para gestão de clientes, ativos, orçamentos e ordens de serviço (OS).
+Sistema desktop em Python para controlar o ciclo completo da oficina: cliente e veículo → orçamento → ordem de serviço → estoque → pagamento → entrega → histórico.
 
 [![CI](https://github.com/breno031-JOW/OPERIX/actions/workflows/ci.yml/badge.svg)](https://github.com/breno031-JOW/OPERIX/actions/workflows/ci.yml)
-![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)
-![Tkinter](https://img.shields.io/badge/GUI-Tkinter-informational)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![GUI](https://img.shields.io/badge/GUI-Tkinter%20%2B%20ttkbootstrap-informational)
 ![SQLite](https://img.shields.io/badge/Database-SQLite3-003B57?logo=sqlite&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -17,137 +17,129 @@ Sistema desktop em Python para gestão de clientes, ativos, orçamentos e ordens
 
 ---
 
-## 📖 Sobre o projeto
-
-O **Operix** é um sistema de gestão interna e de ordens de serviço voltado a pequenos e médios negócios, como oficinas mecânicas, assistências técnicas e prestadores de serviços. Ele reúne em uma interface simples e moderna todo o fluxo operacional: do cadastro do cliente ao orçamento, e da execução da OS até a conclusão.
-
-```mermaid
-flowchart LR
-    A[Cliente + Ativo] --> B[Orçamento<br/>Pendente]
-    B -->|aprovação| C[Orçamento<br/>Aprovado]
-    C -->|geração automática| D[OS<br/>Em Andamento]
-    D -->|conclusão| E[OS<br/>Concluída]
-```
-
-## 🖼️ Screenshots
-
-| Login | Dashboard |
-|:---:|:---:|
-| ![Login](https://drive.google.com/file/d/1l0tFrd8ToSYP-COHjyvRElosVZonDFFk/view?usp=drive_link) | ![Dashboard](https://drive.google.com/file/d/1iEauigfFOXf-K4R969Vgpw1wKXVQBDlo/view?usp=drive_link) |
-
-| Clientes e Ativos | Orçamentos |
-|:---:|:---:|
-| ![Clientes](https://drive.google.com/file/d/1MeCJBqxOHXtFcCAsfWXdbsZ4ihErihKZ/view?usp=drive_link) | ![Orçamentos](https://drive.google.com/file/d/11HMZgTxy9CcuOiDQTzcIjYz9GU3WC1wd/view?usp=drive_link) |
-
-| Ordens de Serviço |
-|:---:|
-| ![Ordens de Serviço](https://drive.google.com/file/d/1-tw-CyOS-Az1ZYHAzgW5T-u65QcW5NhV/view?usp=drive_link) |
-
 ## 🚀 Funcionalidades
 
-- 🔒 **Autenticação segura:** login com senhas protegidas por hash (PBKDF2-SHA256 com salt) e suporte a várias empresas (multi-tenant).
-- 📊 **Dashboard:** métricas em tempo real (orçamentos pendentes, OS em andamento e total de clientes).
-- 👥 **Clientes e ativos:** cadastro unificado de clientes e dos seus ativos (veículos, equipamentos).
-- 📝 **Orçamentos:** criação de orçamentos vinculados a cliente e ativo, com validação de valores (aceita `150`, `150,50` ou `1.250,90`).
-- 🛠️ **Ordens de serviço:** geração automática da OS ao aprovar o orçamento e acompanhamento até a conclusão.
-- 🏢 **Isolamento por empresa:** cada usuário só enxerga e altera os dados da própria empresa.
+**Operação**
+- 📋 **Ordens de serviço completas:** abertura com km e defeito relatado, mecânico responsável, diagnóstico, observações e histórico de cada mudança de status.
+- 🔄 **Fluxo de status:** Orçamento → Aprovada → Em execução ⇄ Aguardando peça → Pronta p/ entrega → Entregue (com Reprovada e Cancelada). Só as transições válidas aparecem como botões.
+- 🧮 **Orçamento com itens:** peças do estoque + mão de obra (livre ou do catálogo), desconto e totais automáticos.
+- 📦 **Estoque com baixa automática:** ao aprovar a OS as peças saem do estoque. Se faltar saldo, nada é baixado e o sistema lista o que falta. Peças incluídas depois saem na hora, e ao cancelar a OS voltam ao estoque. Inclui entrada de mercadoria, ajuste de inventário, alerta de estoque mínimo e extrato de movimentações.
+- 🔎 **Histórico por placa:** todas as OS, peças trocadas, km e gasto total do veículo.
+- 💳 **Pagamentos:** parciais ou totais em várias formas (PIX, cartão, dinheiro…). A entrega exige quitação ou confirmação de saldo em aberto.
 
-## 🧰 Tecnologias
+**Gestão**
+- 📊 **Painel** com orçamentos pendentes, carros em execução, aguardando peça, prontos para entrega e estoque baixo. Os cartões são clicáveis.
+- 💰 **Financeiro:** recebido no período, faturamento, ticket médio, contas a receber, receita de mão de obra, lucro bruto em peças, recebimentos por forma e peças mais usadas.
+- 📄 **PDFs:** orçamento (com campo de autorização), ordem de serviço (com garantia), recibo e relatório financeiro, com os dados da oficina no cabeçalho.
 
-| Camada | Tecnologia |
-|---|---|
-| Linguagem | Python 3.9+ |
-| Interface gráfica | Tkinter / ttk (tema customizado) |
-| Banco de dados | SQLite3 (sem servidor externo) |
-| Paradigma | Orientação a Objetos: classe abstrata (`abc`), herança, polimorfismo e fábrica |
-| Testes | pytest |
-| CI | GitHub Actions |
+**Segurança e qualidade**
+- 🔒 Senhas com hash **PBKDF2-SHA256 + salt**, primeiro acesso guiado (sem senha padrão).
+- 👥 **Perfis de acesso:** Administrador, Atendente e Mecânico (veja a tabela em [docs/ARQUITETURA.md](docs/ARQUITETURA.md)).
+- ✅ Validação de **CPF/CNPJ** (dígitos verificadores), **placa** antiga e Mercosul, telefone, e-mail e valores (`150`, `150,50`, `1.250,90`).
+- 🛡️ Erros nunca fecham o programa: avisos claros para o usuário e detalhes técnicos em `operix.log`.
+- 🏢 Isolamento por empresa (multiempresa) em todas as consultas.
 
-> O sistema usa apenas a biblioteca padrão do Python: nenhuma instalação extra é necessária para executar.
+**Usabilidade**
+- Tabelas com **busca instantânea** (sem diferenciar acentos), ordenação por coluna e cores por status.
+- **Máscaras** de CPF/CNPJ, telefone, placa e moeda enquanto digita.
+- **Atalhos:** `F2`/`Ctrl+N` novo · `F3`/`Ctrl+F` buscar · `F5` atualizar · `Enter` abrir/salvar · `Esc` cancelar · `Ctrl+1…8` menu · `Delete` remove item da OS.
+- Avisos discretos de sucesso (toast) e confirmação antes de ações irreversíveis.
 
-## 🗂️ Arquitetura
-
-O projeto segue uma arquitetura em camadas, com a regra de negócio totalmente separada da interface gráfica (por isso é testável sem abrir nenhuma janela):
-
-```
-OPERIX/
-├── main.py                  # ponto de entrada
-├── operix/
-│   ├── config.py            # caminho do banco, nome do app, credenciais de demonstração
-│   ├── database.py          # conexão SQLite, esquema e carga inicial
-│   ├── security.py          # hash e verificação de senhas
-│   ├── utils.py             # conversão e formatação de valores monetários
-│   ├── models/              # Usuario, Cliente, Ativo (abstrata), Veiculo, Equipamento
-│   ├── services/            # regras de negócio (auth, clientes, orçamentos, OS, dashboard)
-│   └── ui/                  # Tkinter: tema, componentes e telas
-├── tests/                   # testes automatizados (pytest)
-└── docs/                    # arquitetura e screenshots
-```
-
-Mais detalhes, com diagramas do banco de dados e das classes, em [docs/ARQUITETURA.md](docs/ARQUITETURA.md).
-
-## 🏁 Como executar
+## 🏁 Como executar no Windows
 
 ### Pré-requisitos
+- **Python 3.10 ou superior** ([python.org](https://www.python.org/downloads/)). Na instalação, marque *"Add python.exe to PATH"*. O Tkinter já vem junto.
 
-- Python 3.9 ou superior
-- Tkinter (já vem com o Python no Windows e no macOS). No Linux, se houver erro de importação:
-
-```bash
-sudo apt install python3-tk
-```
-
-### Passo a passo
+### Passo a passo (PowerShell ou Prompt de Comando)
 
 ```bash
-# 1. Clone o repositório
 git clone https://github.com/breno031-JOW/OPERIX.git
-cd OPERIX
-
-# 2. (Opcional) Crie e ative um ambiente virtual
-python -m venv .venv
-source .venv/bin/activate      # Linux/macOS
-.venv\Scripts\activate         # Windows
-
-# 3. Execute a aplicação
-python main.py                 # ou: python -m operix
 ```
 
-O banco `operix.db` é criado automaticamente na primeira execução. Para usar outro arquivo, defina a variável de ambiente `OPERIX_DB`.
+```bash
+cd OPERIX
+```
 
-### 🔑 Acesso de demonstração
+```bash
+python -m venv .venv
+```
 
-| E-mail | Senha |
-|---|---|
-| `admin@operix.com` | `1234` |
+```bash
+.venv\Scripts\activate
+```
 
-> Conta criada apenas para demonstração, em um banco novo. Em uso real, crie seus próprios usuários.
+> No PowerShell, se aparecer erro de "execução de scripts desabilitada", rode uma vez:
+> `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
+
+```bash
+pip install -r requirements.txt
+```
+
+```bash
+python main.py
+```
+
+Na primeira execução o Operix abre o **assistente de primeiro acesso**: você cadastra a oficina e o usuário administrador. O banco `operix.db` é criado automaticamente na pasta do projeto.
+
+### Quer testar com dados de exemplo?
+
+Em um banco **vazio** (por exemplo, apontando para outro arquivo):
+
+```bash
+python main.py --demo --banco demo.db
+```
+
+| Perfil | E-mail | Senha |
+|---|---|---|
+| Administrador | `admin@demo.com` | `admin123` |
+| Atendente | `atendente@demo.com` | `atend123` |
+| Mecânico | `mecanico@demo.com` | `mec123` |
+
+> Contas apenas para demonstração. Nunca use `--demo` no banco real da oficina.
+
+### Já usava a versão anterior?
+
+Basta abrir o Operix 2 com o mesmo `operix.db`: a migração automática converte os dados. As senhas viram hash e o login antigo continua funcionando; valores são convertidos, clientes com o mesmo documento são unificados e orçamentos/OS antigos viram ordens com o valor preservado. **Faça uma cópia do arquivo antes, por segurança.**
+
+### Opções e arquivos
+
+| O quê | Padrão | Como mudar |
+|---|---|---|
+| Banco de dados | `operix.db` na pasta do projeto | `--banco caminho.db` ou variável `OPERIX_DB` |
+| PDFs gerados | pasta `documentos/` | variável `OPERIX_DOCS` |
+| Log de erros | `operix.log` | variável `OPERIX_LOG` |
 
 ## 🧪 Testes
 
 ```bash
 pip install -r requirements-dev.txt
+```
+
+```bash
 pytest
 ```
 
-Os testes cobrem hash de senhas, autenticação, cadastro de clientes, o fluxo completo orçamento → OS → conclusão, validações e o isolamento entre empresas.
+São 56 testes cobrindo validações, moeda, senhas, cadastros, isolamento entre empresas, permissões por perfil, o fluxo completo da OS (estoque, pagamentos, entrega, cancelamento), histórico por placa, PDFs e a migração do banco antigo.
 
-## 🗺️ Roadmap
+## 🗂️ Arquitetura
 
-- [ ] Baixa automática de estoque ao concluir uma OS
-- [ ] Edição e exclusão de clientes, ativos e orçamentos
-- [ ] Itens e desconto no orçamento (a coluna `desconto` já existe no banco)
-- [ ] Controle de permissões por perfil de usuário
-- [ ] Relatórios e exportação em PDF
-- [ ] Empacotamento em executável (`.exe`)
+Camadas separadas: `database` → `models` → `services` (regras de negócio, testáveis sem interface) → `ui` / `reports`. Detalhes, diagrama de estados da OS e matriz de permissões em [docs/ARQUITETURA.md](docs/ARQUITETURA.md). O esquema do banco está em [Operix_Modelo_Fisico.sql](Operix_Modelo_Fisico.sql).
+
+## 🗺️ Próximos passos sugeridos
+
+- [ ] Empacotamento em executável (`.exe`) com PyInstaller
+- [ ] Backup automático do banco
+- [ ] Envio do orçamento por WhatsApp/e-mail
+- [ ] Agenda de serviços e lembrete de revisão por km/data
+- [ ] Suporte a PostgreSQL para várias máquinas em rede
 
 ## 🤝 Como contribuir
 
-Contribuições são bem-vindas! Veja o guia em [CONTRIBUTING.md](CONTRIBUTING.md).
+Veja o guia em [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 📄 Licença
 
-Distribuído sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais informações.
+Distribuído sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE).
 
 ## 👤 Autor
 

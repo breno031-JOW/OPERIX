@@ -1,18 +1,18 @@
 [project]
 name = "operix"
-version = "1.0.0"
-description = "Sistema desktop de gestão de clientes, orçamentos e ordens de serviço (Tkinter + SQLite)"
+version = "2.0.0"
+description = "Sistema desktop de gestão para oficinas mecânicas: OS, estoque, financeiro e PDFs (Tkinter + SQLite)"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { text = "MIT" }
-keywords = ["ordem-de-servico", "erp", "tkinter", "sqlite", "gestao"]
+keywords = ["ordem-de-servico", "oficina-mecanica", "erp", "tkinter", "sqlite", "gestao"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: Portuguese (Brazilian)",
     "Topic :: Office/Business",
 ]
-dependencies = []
+dependencies = ["ttkbootstrap==1.10.1", "fpdf2>=2.7", "pillow>=10.0"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.5"]
@@ -27,8 +27,8 @@ include = ["operix*"]
 testpaths = ["tests"]
 
 [tool.ruff]
-line-length = 120
-target-version = "py39"
+line-length = 125
+target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
